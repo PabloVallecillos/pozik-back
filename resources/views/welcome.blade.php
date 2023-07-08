@@ -137,4 +137,5 @@
             </div>
         </div>
     </body>
+    {{ phpinfo() }}
 </html>
