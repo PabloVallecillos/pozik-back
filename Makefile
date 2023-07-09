@@ -17,3 +17,19 @@ stop:
 .PHONY: down
 down:
 	./vendor/bin/sail down
+
+.PHONY: migrate-fresh-testing
+migrate-fresh-testing:
+	./vendor/bin/sail artisan migrate:fresh --env=testing --seed
+
+.PHONY: test
+test:
+	./vendor/bin/sail test
+
+.PHONY: key-generate
+key-generate:
+	php artisan key:generate
+
+.PHONY: action-install
+action-install:
+	composer install --no-ansi --no-interaction --no-scripts --no-suggest --no-progress --prefer-dist
