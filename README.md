@@ -20,6 +20,8 @@ sudo pacman -S docker-compose
 
 The application uses docker thanks to [Laravel Sail](https://laravel.com/docs/10.x/sail).
 
+### Makefile
+
 Check the commands in the Makefile, to run one make target_name. Example: `make up`
 
 ### Auth
