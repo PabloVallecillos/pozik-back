@@ -38,6 +38,8 @@ jobs:
       - name: Up app
         run: |
           docker pull pablovallecillos/pozik_back:latest
+          docker pull mysql/mysql-server:8.0
+          docker pull axllent/mailpit:latest
           make up
 
       - name: Wait for services to start
