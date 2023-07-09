@@ -20,7 +20,6 @@ jobs:
         run: |
           if [ ! -f .env ]; then
             cp .env.testing .env
-            cp .env.testing .env.testing
           fi
 
       - name: Install dependencies
