@@ -1,6 +1,6 @@
 name: Pull Request Workflow
 
-#CI will be run for PRs when opened, reopened or new commits.
+# CI will be run for PRs when opened, reopened or new commits.
 on:
   pull_request:
     branches:
@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -28,8 +29,17 @@ jobs:
       - name: Generate key
         run: make key-generate
 
+      - name: Configure container cache
+        uses: actions/cache@v3
+        with:
+          path: ./var/www/html
+          key: sail-up-${{ runner.os }}-{{ hashFiles('**/composer.lock') }}
+
       - name: Set up app
         run: make up
+
+      - name: Wait for services to start
+        run: sleep 10
 
       - name: Run migrations
         run: make migrate-fresh-testing
