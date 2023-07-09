@@ -1,11 +1,8 @@
 name: Pull Request Workflow
 
+#CI will be run for PRs when opened, reopened or new commits.
 on:
   pull_request:
-    types:
-      - opened
-      - edited
-      - reopened
     branches:
       - master
   # Allows you to run this workflow manually from the Actions tab
