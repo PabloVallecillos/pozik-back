@@ -13,15 +13,21 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    // TODO:
-//
-//fcm_token
-//last_activity
-//platform
-//front_version
-//device
-//time_zone
-//auth_provider
+    const AUTH_PROVIDERS = [
+        self::API_AUTH_PROVIDER,
+        self::GOOGLE_AUTH_PROVIDER,
+        self::APPLE_AUTH_PROVIDER,
+    ];
+    const PLATFORMS = [
+        self::ANDROID_PLATFORM,
+        self::IOS_PLATFORM,
+    ];
+
+    const API_AUTH_PROVIDER = 'api';
+    const GOOGLE_AUTH_PROVIDER = 'google';
+    const APPLE_AUTH_PROVIDER = 'apple';
+    const ANDROID_PLATFORM = 'android';
+    const IOS_PLATFORM = 'ios';
 
     /**
      * The attributes that are mass assignable.

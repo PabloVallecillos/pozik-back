@@ -18,7 +18,12 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->dateTime('last_activity')->nullable();
+            $table->string('front_version', 20)->nullable();
+            $table->string('platform', 10)->nullable();
             $table->string('device')->nullable();
+            $table->string('auth_provider', 15)->nullable();
+            $table->string('fcm_token')->nullable();
             $table->timestamps();
         });
     }

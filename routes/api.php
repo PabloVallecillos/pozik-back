@@ -20,8 +20,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('login', [TokenController::class, 'login'])
-    ->middleware(['throttle:6,1']);
+    ->middleware(['throttle:6,1'])
+    ->name('token.login');
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('logout', [TokenController::class, 'logout']);
+    Route::get('logout', [TokenController::class, 'logout'])->name('token.logout');
 });
