@@ -1,0 +1,52 @@
+name: Pull Request Workflow
+
+# CI will be run for PRs when opened, reopened or new commits.
+on:
+  pull_request:
+    branches:
+      - master
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Copy .env
+        run: |
+          if [ ! -f .env ]; then
+            cp .env.testing .env
+          fi
+
+      - name: Install dependencies
+        run: make action-install
+
+      - name: Generate key
+        run: make key-generate
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Up app
+        run: |
+          docker pull pablovallecillos/pozik_back:latest
+          docker pull mysql/mysql-server:8.0
+          docker pull axllent/mailpit:latest
+          make up
+
+      - name: Wait for services to start
+        run: sleep 10
+
+      - name: Run migrations
+        run: make migrate-fresh-testing
+
+      - name: Run tests
+        run: make test
