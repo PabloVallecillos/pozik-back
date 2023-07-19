@@ -43,7 +43,7 @@ jobs:
           make up
 
       - name: Wait for services to start
-        run: sleep 5
+        run: sleep 10
 
       - name: Run migrations
         run: make migrate-fresh-testing
