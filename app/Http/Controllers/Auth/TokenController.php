@@ -11,6 +11,11 @@ use Illuminate\Validation\ValidationException;
 
 class TokenController extends Controller
 {
+    /**
+     * @unauthenticated
+     * @param LoginRequest $request
+     * @return array
+     */
     public function login(LoginRequest $request): array
     {
         $user = User::where('email', $request->email)->first();
