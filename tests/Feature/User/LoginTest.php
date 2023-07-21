@@ -15,7 +15,7 @@ class LoginTest extends TestCase
         $user = User::factory()->create();
 
         $this
-            ->post(route('token.login'), [
+            ->post(route('user.login'), [
                 'email' => $user->email,
                 'password' => 'password',
             ])
@@ -26,7 +26,7 @@ class LoginTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $this->post(route('token.login'), [
+        $this->post(route('user.login'), [
             'email' => $user->email,
             'password' => 'wrong-password',
         ]);
