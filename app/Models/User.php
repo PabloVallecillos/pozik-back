@@ -8,8 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Contracts\Translation\HasLocalePreference;
 
-class User extends Authenticatable
+class User extends Authenticatable implements HasLocalePreference
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -23,6 +24,7 @@ class User extends Authenticatable
         self::IOS_PLATFORM,
     ];
 
+    const DEFAULT_LOCALE = 'es';
     const API_AUTH_PROVIDER = 'api';
     const GOOGLE_AUTH_PROVIDER = 'google';
     const APPLE_AUTH_PROVIDER = 'apple';
@@ -36,8 +38,16 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'surname',
         'email',
         'password',
+        'last_activity',
+        'front_version',
+        'platform',
+        'device',
+        'auth_provider',
+        'fcm_token',
+        'locale'
     ];
 
     /**
@@ -48,6 +58,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'fcm_token',
     ];
 
     /**
@@ -63,5 +74,10 @@ class User extends Authenticatable
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(Role::class);
+    }
+
+    public function preferredLocale(): string
+    {
+        return $this->locale;
     }
 }

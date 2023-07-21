@@ -9,7 +9,7 @@ return [
     /*
      * The HTML <title> for the generated documentation. If this is empty, Scribe will infer it from config('app.name').
      */
-    'title' => 'Pozik API Documentation | ' . config('pozik.version'),
+    'title' => 'Pozik API Doc | ' . config('pozik.version'),
 
     /*
      * A short description of your API. Will be included in the docs webpage, Postman collection and OpenAPI spec.

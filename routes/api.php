@@ -1,7 +1,6 @@
 <?php
 
-use App\Http\Controllers\Auth\TokenController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,14 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::post('login', [TokenController::class, 'login'])
+Route::post('login', [UserController::class, 'login'])
     ->middleware(['throttle:6,1'])
-    ->name('token.login');
+    ->name('user.login');
+
+Route::post('register', [UserController::class, 'register'])
+    ->middleware(['throttle:10,1'])
+    ->name('user.register');
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('logout', [TokenController::class, 'logout'])->name('token.logout');
+    Route::get('logout', [UserController::class, 'logout'])->name('user.logout');
+    Route::get('user', [UserController::class, 'user'])->name('user.user');
 });
