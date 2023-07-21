@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Auth;
+namespace Tests\Feature\User;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -18,7 +18,7 @@ class LogoutTest extends TestCase
 
         $res = $this
             ->withHeader('Authorization', "Bearer $token")
-            ->get(route('token.logout'));
+            ->get(route('user.logout'));
 
         $res->assertOk();
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Auth;
+namespace Tests\Feature\User;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -15,7 +15,7 @@ class LoginTest extends TestCase
         $user = User::factory()->create();
 
         $this
-            ->post(route('token.login'), [
+            ->post(route('user.login'), [
                 'email' => $user->email,
                 'password' => 'password',
             ])
@@ -26,7 +26,7 @@ class LoginTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $this->post(route('token.login'), [
+        $this->post(route('user.login'), [
             'email' => $user->email,
             'password' => 'wrong-password',
         ]);
