@@ -2,18 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\User\ChangePasswordUserRequest;
 use App\Http\Requests\User\LoginUserRequest;
 use App\Http\Requests\User\RegisterUserRequest;
-use App\Mail\RegisterUser;
+use App\Mail\User\RecoveryPasswordUser;
+use App\Mail\User\RegisterUser;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
-
     /**
      * @unauthenticated
      */
@@ -41,7 +44,7 @@ class UserController extends Controller
         ];
     }
 
-    public function user(Request $request): array
+    public function logged(Request $request): array
     {
         return [
             'user' => $request->user()
@@ -67,6 +70,29 @@ class UserController extends Controller
 
         return [
             'user' => $user
+        ];
+    }
+
+    public function recoveryPassword(Request $request): array
+    {
+        $user = $request->user();
+        $passwordRecovered = Str::random(10);
+        $user->password = bcrypt($passwordRecovered);
+        $status = $user->save();
+        Mail::to($user->email)->send(new RecoveryPasswordUser($user, $passwordRecovered));
+
+        return [
+            'status' => $status,
+        ];
+    }
+
+    public function changePassword(ChangePasswordUserRequest $request): array
+    {
+        $user = $request->user();
+        $user->password = bcrypt($request->new_password);
+
+        return [
+            'status' => $user->save(),
         ];
     }
 }

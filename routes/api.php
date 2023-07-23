@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('login', [UserController::class, 'login'])
-    ->middleware(['throttle:6,1'])
+    ->middleware(['throttle:10,1'])
     ->name('user.login');
 
 Route::post('register', [UserController::class, 'register'])
@@ -23,6 +23,14 @@ Route::post('register', [UserController::class, 'register'])
     ->name('user.register');
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('logout', [UserController::class, 'logout'])->name('user.logout');
-    Route::get('user', [UserController::class, 'user'])->name('user.user');
+    Route::prefix('user')->name('user.')->group(function () {
+        Route::get('logout', [UserController::class, 'logout'])->name('logout');
+        Route::get('logged', [UserController::class, 'logged'])->name('logged');
+        Route::get('recovery-password', [UserController::class, 'recoveryPassword'])
+            ->middleware(['throttle:10,1'])
+            ->name('recovery-password');
+        Route::put('change-password', [UserController::class, 'changePassword'])
+            ->middleware(['throttle:10,1'])
+            ->name('change-password');
+    });
 });

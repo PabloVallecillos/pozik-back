@@ -10,7 +10,7 @@ class LoginTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testUsersCanAuthenticateUsingTheLoginEndpoint(): void
+    public function testRouteLogin(): void
     {
         $user = User::factory()->create();
 
@@ -22,7 +22,7 @@ class LoginTest extends TestCase
             ->assertOk();
     }
 
-    public function testUsersCanNotAuthenticateWithInvalidPasswordUsingTheLoginEndpoint(): void
+    public function testRouteLoginWithInvalidPassword(): void
     {
         $user = User::factory()->create();
 
