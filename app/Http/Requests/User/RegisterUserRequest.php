@@ -12,7 +12,7 @@ class RegisterUserRequest extends FormRequest
             'name' => 'required|string|max:255',
             'surname' => 'required|string|max:255',
             'email' => 'required|email|unique:users',
-            'password' => 'required|min:8',
+            'password' => 'required|min:8|max:255',
             'front_version' => 'nullable|string|max:20',
             'platform' => 'nullable|string|max:10',
             'device' => 'nullable|string|max:255',

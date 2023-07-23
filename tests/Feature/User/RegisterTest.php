@@ -2,18 +2,17 @@
 
 namespace Tests\Feature\User;
 
-use App\Mail\RegisterUser;
+use App\Mail\User\RegisterUser;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class RegisterTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function testUsersCanRegisterUsingTheRegisterEndpoint(): void
+    public function testRouteRegister(): void
     {
         $user = User::factory()->make();
         Mail::fake();
