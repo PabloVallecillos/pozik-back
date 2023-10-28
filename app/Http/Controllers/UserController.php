@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\User\ChangePasswordUserRequest;
 use App\Http\Requests\User\LoginUserRequest;
 use App\Http\Requests\User\RegisterUserRequest;
+use App\Http\Requests\User\UpdateUserRequest;
 use App\Mail\User\RecoveryPasswordUser;
 use App\Mail\User\RegisterUser;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -19,13 +21,14 @@ class UserController extends Controller
 {
     /**
      * @unauthenticated
+     * @throws ValidationException
      */
     public function login(LoginUserRequest $request): array
     {
         $user = User::where('email', $request->email)->first();
         if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
-                'email' => 'The provided credentials are incorrect.',
+                'password' => 'The provided credentials are incorrect.',
             ]);
         }
 
@@ -93,6 +96,16 @@ class UserController extends Controller
 
         return [
             'status' => $user->save(),
+        ];
+    }
+
+    public function update(UpdateUserRequest $request, ?User $user): array
+    {
+        $data = $request->validated();
+        $user = $user?->id ? $user : $request->user();
+
+        return [
+            'status' => $user->update($data),
         ];
     }
 }

@@ -80,4 +80,9 @@ class User extends Authenticatable implements HasLocalePreference
     {
         return $this->locale;
     }
+
+    public function hasAnyRole(array $roles): bool
+    {
+        return $this->roles->contains($roles);
+    }
 }

@@ -32,5 +32,6 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('change-password', [UserController::class, 'changePassword'])
             ->middleware(['throttle:10,1'])
             ->name('change-password');
+        Route::patch('update/{user?}', [UserController::class, 'update'])->name('update');
     });
 });

@@ -17,7 +17,7 @@ class LoginUserRequest extends FormRequest
         return [
             'email' => 'required|email|exists:users',
             'password' => 'required|min:8',
-            'device' => 'nullable|exists:users',
+            'device' => 'nullable',
         ];
     }
 }
